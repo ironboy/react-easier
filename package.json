@@ -1,0 +1,26 @@
+{
+  "name": "react-easier",
+  "version": "1.0.0",
+  "description": "Useful React tools in the form of hooks, HOC:s and Components.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ironboy/react-easier.git"
+  },
+  "author": "ironboy NodeHill",
+  "license": "MIT",
+  "keywords": [
+    "React",
+    "tools",
+    "Components",
+    "hooks",
+    "HOC"
+  ],
+  "bugs": {
+    "url": "https://github.com/ironboy/react-easier/issues"
+  },
+  "homepage": "https://github.com/ironboy/react-easier#readme"
+}
