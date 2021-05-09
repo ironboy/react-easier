@@ -1,10 +1,18 @@
 import { useState, useDebugValue } from 'react';
 
 const statesProto = {
-  bind(key) {
-    return {
-      name: key, value: this[key],
+  bind(key, valueCheck) {
+    return valueCheck === undefined ? {
+      name: key,
+      value: this[key],
       onChange: e => this[key] = e.target.value
+    } : { // radio buttons etc...
+      name: key,
+      value: valueCheck + '',
+      checked: valueCheck === this[key],
+      onChange: e => {
+        this[key] = valueCheck + '' === e.target.value && valueCheck;
+      }
     }
   }
 };
