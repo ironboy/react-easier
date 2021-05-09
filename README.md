@@ -124,7 +124,7 @@ function App() {
 };
 ```
 
-### src/Person.jxs
+### src/Person.jsx
 
 ```jsx
 import React from 'react';
