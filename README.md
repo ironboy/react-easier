@@ -38,6 +38,7 @@ If you have data fetched from a database you probably have id:s of each person -
 
 ```jsx
 <Person loop={g.persons} loopKey="_id">
+```
 
 ### How to install
 The demo is built with React Vite, but the same code works equally well with Create-React-App.
