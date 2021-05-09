@@ -1,13 +1,17 @@
 import React, { useContext, useDebugValue } from 'react';
-import useStates from './useStates';
-let allContexts = {};
+import useStates from '../useStates';
+
+const allContexts = {};
 
 function useContextLabel(x) { useDebugValue(x) }
 
 export const withContext = (contextName, contextData, SubComponent) => {
   return function WithContext(p) {
-    let TheContext = React.createContext();
-    allContexts[contextName] = TheContext;
+    let TheContext = allContexts[contextName];
+    if (!TheContext) {
+      TheContext = React.createContext();
+      allContexts[contextName] = TheContext;
+    }
     let contextValue = useStates(contextData);
     useContextLabel(contextName);
     return (
