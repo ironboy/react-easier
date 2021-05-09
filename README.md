@@ -9,6 +9,7 @@ Together they make using React a lot easier when it comes to:
 * creating *global stores* (via context)
 
 * creating *local reactive state variables* 
+* writing Vue-like loops for components.
 * writing Vue-like **If-ElseIf-Else**-clauses 
 * and doing easy **binds** of input fields to both global stores and local state variables.
 
@@ -22,6 +23,21 @@ This example shows off all the different exports from **react-easier**:
 * useStates
 * useNamedContext
 * If, ElseIf, Else
+
+### Loops
+You create components that are easy to loop by wrapping your components in the **HOC** *withLoop*.
+
+In the example we use this like:
+```jsx
+<Person loop={g.persons} />
+```
+
+This will set the key for each Person in the loop to the index number of *g.persons*.
+
+If you have data fetched from a database you probably have id:s of each person - in that case you would specify a **loopKey** (probably **id** for SQL-databases and **_id** for MongoDB):
+
+```jsx
+<Person loop={g.persons} loopKey="_id">
 
 ### How to install
 The demo is built with React Vite, but the same code works equally well with Create-React-App.
