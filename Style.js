@@ -13,10 +13,10 @@ const hash = x => x.split('').reduce((hash, char) => 0 | (31 * hash + char.charC
 
 function cssNester(css, nestWith) {
   let kframes = [];
-  css = css.replace(/\r/g, '')
+  return '/*' + nestWith + '*/\n' + css.replace(/\r/g, '')
     .replace(/@(-moz-|-webkit-|-ms-)*keyframes\s(.*?){([0-9%a-zA-Z,\s.]*{(.*?)})*[\s\n]*}/g, x => kframes.push(x) && '__keyframes__')
-    .replace(/([^\n,{}]+)(,(?=[^}]*{)|\s*{)/g, x => x.trim()[0] === '@' ? x : x.replace(/(\s*)/, '$1' + nestWith + ' '));
-  return '/*' + nestWith + '*/\n' + css.replace(/__keyframes__/g, x => kframes.shift());
+    .replace(/([^\n,{}]+)(,(?=[^}]*{)|\s*{)/g, x => x.trim()[0] === '@' ? x : x.replace(/(\s*)/, '$1' + nestWith + ' '))
+    .replace(/__keyframes__/g, x => kframes.shift());
 }
 
 export default function Style(props) {
