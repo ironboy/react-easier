@@ -11,7 +11,7 @@ export default SubComponent => {
         { key: x[p.loopKey] || i },
         React.createElement(
           SubComponent,
-          { key: x[p.loopKey] || i, ...p2, ...x }
+          { key: x[p.loopKey] || i, ...p2, ...x, item: x }
         )
       ));
   }
