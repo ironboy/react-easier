@@ -1,25 +1,21 @@
 import React from 'react';
+import cssNester from './cssNester.js';
 
 const hashNames = [];
-
-const styleEl = document.createElement('style');
-styleEl.className = 'react-scoped-styles';
-document.head.append(styleEl);
-
-class StyleWrapper extends HTMLElement { }
-customElements.define('style-wrapper', StyleWrapper, { extends: 'span' });
+let styleEl;
 
 const hash = x => x.split('').reduce((hash, char) => 0 | (31 * hash + char.charCodeAt(0)), 0);
 
-function cssNester(css, nestWith) {
-  let kframes = [];
-  return '/*' + nestWith + '*/\n' + css.replace(/\r/g, '')
-    .replace(/@(-moz-|-webkit-|-ms-)*keyframes\s(.*?){([0-9%a-zA-Z,\s.]*{(.*?)})*[\s\n]*}/g, x => kframes.push(x) && '__keyframes__')
-    .replace(/([^\n,{}]+)(,(?=[^}]*{)|\s*{)/g, x => x.trim()[0] === '@' ? x : x.replace(/(\s*)/, '$1' + nestWith + ' '))
-    .replace(/__keyframes__/g, x => kframes.shift());
+function init() {
+  class StyleWrapper extends HTMLElement { }
+  customElements.define('style-wrapper', StyleWrapper, { extends: 'span' });
+  styleEl = document.createElement('style');
+  styleEl.className = 'react-scoped-styles';
+  document.head.append(styleEl);
 }
 
 export default function Style(props) {
+  styleEl || init();
   let { css } = props, _hash = 'style-' + hash(css);
   if (!hashNames.includes(_hash)) {
     hashNames.push(_hash);
