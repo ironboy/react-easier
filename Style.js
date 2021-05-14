@@ -22,6 +22,6 @@ export default function Style(props) {
     styleEl.append(document.createTextNode(cssNester(css, '.' + _hash)));
   }
   return React.createElement(
-    'style-wrapper', { className: _hash }, props.children
+    'style-wrapper', { class: _hash }, props.children
   );
 }
