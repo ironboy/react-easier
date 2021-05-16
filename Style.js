@@ -8,7 +8,7 @@ const hash = x => x.split('').reduce((hash, char) => 0 | (31 * hash + char.charC
 
 function init() {
   class StyleWrapper extends HTMLElement { }
-  customElements.define('style-wrapper', StyleWrapper, { extends: 'div' });
+  customElements.define('style-wrapper', StyleWrapper, { extends: 'span' });
   styleEl = document.createElement('style');
   styleEl.className = 'react-scoped-styles';
   document.head.append(styleEl);
