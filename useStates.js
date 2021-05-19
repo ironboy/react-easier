@@ -1,4 +1,5 @@
 import { useState, useDebugValue } from 'react';
+import ArrayExtend from './ArrayExtend.js';
 
 const statesProto = {
   bind(key, valueCheck) {
@@ -23,10 +24,10 @@ export default function useStates(data) {
   let states = Object.create(statesProto);
   for (let [key, val] of Object.entries(data)) {
     useStateLabel(key);
-    const [state, setter] = useState(val);
+    const [state, setter] = useState(ArrayExtend(val));
     Object.defineProperty(states, key, {
       get: () => state,
-      set: (x) => setter(x)
+      set: (x) => setter(ArrayExtend(x))
     });
   }
   return states;
