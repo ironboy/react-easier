@@ -24,10 +24,10 @@ export default function useStates(data) {
   let states = Object.create(statesProto);
   for (let [key, val] of Object.entries(data)) {
     useStateLabel(key);
-    const [state, setter] = useState(ArrayExtend(val));
+    const [state, setter] = useState(ArrayExtend(state, key, val));
     Object.defineProperty(states, key, {
       get: () => state,
-      set: (x) => setter(ArrayExtend(x))
+      set: (x) => setter(ArrayExtend(state, key, x))
     });
   }
   return states;
