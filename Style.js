@@ -19,7 +19,7 @@ function logic(props) {
   css = css || style || '';
   template = template ? [template] : props.children;
   styleEl || init();
-  let { css } = props, _hash = 'style-' + hash(css);
+  let _hash = 'style-' + hash(css);
   if (!hashNames.includes(_hash)) {
     hashNames.push(_hash);
     styleEl.append(document.createTextNode(cssNester(css, '.' + _hash)));
