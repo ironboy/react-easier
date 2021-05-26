@@ -20,10 +20,11 @@ export default async function importAndStart({ rootSelector, imports, component 
     label = '';
   }
 
-  // Mount the App component in the #root div
+  // Mount the App component
   ReactDOM.render(
     React.createElement(
-      React.StrictMode, {}, React.createElement(component, {})
+      React.StrictMode, null,
+      React.createElement(component, null)
     ),
     document.querySelector(rootSelector)
   );
