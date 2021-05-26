@@ -1,5 +1,8 @@
 export default async function importAndStart({ rootSelector, imports, component }) {
 
+  component = typeof component === 'object' ?
+    (await component).default : component;
+
   // Make imports global (including every named export)
   let label = '';
   for (let i of await Promise.all(imports)) {
