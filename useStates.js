@@ -32,11 +32,12 @@ export default function useStates(obj) {
       return Reflect.get(target, key);
     },
     set(...args) {
-      changer();
+      console.log('setting', args)
+      setTimeout(changer, 0);
       return Reflect.set(...args);
     },
     deleteProperty(...args) {
-      changer();
+      setTimeout(changer, 0);
       return Reflect.deleteProperty(...args);
     }
   };
