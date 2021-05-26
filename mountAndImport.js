@@ -1,8 +1,5 @@
 export default async function importAndStart({ rootSelector, globalImports, component }) {
 
-  component = typeof component === 'object' ?
-    (await component).default : component;
-
   // Make imports global (including every named export)
   let label = '';
   for (let i of await Promise.all(globalImports)) {
@@ -23,7 +20,8 @@ export default async function importAndStart({ rootSelector, globalImports, comp
     label = '';
   }
 
-  // Mount the App component
+  // Mount the root component
+  component = (await import(component)).default;
   ReactDOM.render(
     React.createElement(
       React.StrictMode, null,
