@@ -1,33 +1,47 @@
-import { useState, useDebugValue } from 'react';
+import { useState } from 'react';
 
-const statesProto = {
-  bind(key, valueCheck) {
-    return valueCheck === undefined ? {
-      name: key,
-      value: this[key],
-      onChange: e => this[key] = e.target.value
-    } : { // radio buttons etc...
-      name: key,
-      value: valueCheck + '',
-      checked: valueCheck === this[key],
-      onChange: e => {
-        this[key] = valueCheck + '' === e.target.value && valueCheck;
+export default function useStates(obj) {
+  // recursive proxy handler
+  const handler = {
+    get(target, key) {
+      if (key === 'bind') {
+        return (key, valueCheck) => {
+          return valueCheck === undefined ? {
+            name: key,
+            value: target[key],
+            onChange: e => {
+              target[key] = e.target.value;
+              changer();
+            }
+          } : { // radio buttons etc...
+            name: key,
+            value: valueCheck + '',
+            checked: valueCheck === target[key],
+            onChange: e => {
+              target[key] = valueCheck + '' === e.target.value && valueCheck;
+              changer();
+            }
+          }
+        }
       }
+      if (key === '__isProxy') { return true; }
+      const prop = target[key];
+      if (prop && !prop.__isProxy && typeof prop === 'object') {
+        target[key] = new Proxy(prop, handler);
+      }
+      return Reflect.get(target, key);
+    },
+    set(...args) {
+      changer();
+      return Reflect.set(...args);
+    },
+    deleteProperty(...args) {
+      changer();
+      return Reflect.deleteProperty(...args);
     }
-  }
-};
+  };
 
-function useStateLabel(x) { useDebugValue(x) }
-
-export default function useStates(data) {
-  let states = Object.create(statesProto);
-  for (let [key, val] of Object.entries(data)) {
-    useStateLabel(key);
-    const [state, setter] = useState(val);
-    Object.defineProperty(states, key, {
-      get: () => state,
-      set: (x) => setter(x)
-    });
-  }
-  return states;
+  const changer = () => setter(new Proxy(obj, handler));
+  let [val, setter] = useState(new Proxy(obj, handler));
+  return val;
 }
