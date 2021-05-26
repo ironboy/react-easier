@@ -1,4 +1,4 @@
-export default async function mountAndImport({ rootSelector, imports }) {
+export default async function importAndStart({ rootSelector, imports, component }) {
 
   // Make imports global (including every named export)
   let label = '';
@@ -22,9 +22,9 @@ export default async function mountAndImport({ rootSelector, imports }) {
 
   // Mount the App component in the #root div
   ReactDOM.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
+    React.createElement(
+      React.StrictMode, {}, React.createElement(component, {})
+    ),
     document.querySelector(rootSelector)
   );
 
