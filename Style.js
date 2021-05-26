@@ -36,3 +36,7 @@ export function Style(props) {
 export function SFC(props) {
   return logic(props);
 }
+
+export function SingleFileComponent(props) {
+  return logic(props);
+}

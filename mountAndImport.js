@@ -1,11 +1,11 @@
-export default async function importAndStart({ rootSelector, imports, component }) {
+export default async function importAndStart({ rootSelector, globalImports, component }) {
 
   component = typeof component === 'object' ?
     (await component).default : component;
 
   // Make imports global (including every named export)
   let label = '';
-  for (let i of await Promise.all(imports)) {
+  for (let i of await Promise.all(globalImports)) {
     if (typeof i == 'string') {
       let j = i.replace(/\sas\s/g, ':');
       if (i !== j) {
