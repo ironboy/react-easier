@@ -29,5 +29,3 @@ export default async function importAndStart({ rootSelector, imports, component 
   );
 
 }
-
-start();
