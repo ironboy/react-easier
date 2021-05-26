@@ -17,7 +17,7 @@ function init() {
 function logic(props) {
   let { css, style, template } = props;
   css = css || style || '';
-  template = template ? [template] : props.children;
+  template = template || props.children;
   styleEl || init();
   let _hash = 'style-' + hash(css);
   if (!hashNames.includes(_hash)) {
