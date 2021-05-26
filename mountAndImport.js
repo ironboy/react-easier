@@ -21,7 +21,7 @@ export default async function importAndStart({ rootSelector, globalImports, comp
   }
 
   // Mount the root component
-  component = (await import(component)).default;
+  component = (await component()).default;
   ReactDOM.render(
     React.createElement(
       React.StrictMode, null,
