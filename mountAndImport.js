@@ -1,3 +1,8 @@
+import withLoop from './withLoop.js';
+import { withContext } from './contextHandler.js';
+globalThis.withLoop = withLoop;
+globalThis.withContext = withContext;
+
 export default async function importAndStart({ rootSelector, globalImports, component }) {
 
   // Make imports global (including every named export)
