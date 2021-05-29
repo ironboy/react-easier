@@ -1,6 +1,6 @@
 # React Easier - React with less cruft
 
-A small efficient library to make React much easier.
+A small efficient library that makes React much easier.
 
 Read the complete documentation:
 
