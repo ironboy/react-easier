@@ -6,4 +6,7 @@ Read the complete documentation:
 
  [react-easier.com](https://react-easier.com)
 
-![docs](https://react-easier.com/screenshot.png)
+[![homepage][1]][2]
+
+[1]:  https://react-easier.com/screenshot.png
+[2]:  https://react-easier.com "Redirect to homepage"
