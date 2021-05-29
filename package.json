@@ -1,6 +1,6 @@
 {
   "name": "react-easier",
-  "version": "1.0.42",
+  "version": "1.0.43",
   "description": "Useful React tools in the form of hooks, HOC:s and Components.",
   "main": "index.js",
   "scripts": {
