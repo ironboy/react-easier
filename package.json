@@ -1,6 +1,6 @@
 {
   "name": "react-easier",
-  "version": "1.0.47",
+  "version": "2.0.0",
   "description": "Useful React tools in the form of hooks, HOC:s and Components.",
   "main": "index.js",
   "scripts": {
@@ -15,9 +15,7 @@
   "keywords": [
     "React",
     "tools",
-    "Components",
-    "hooks",
-    "HOC"
+    "hooks"
   ],
   "bugs": {
     "url": "https://github.com/ironboy/react-easier/issues"
