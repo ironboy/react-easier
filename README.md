@@ -6,6 +6,20 @@ React-easier is number of extra hooks that makes React easier to use when it com
 
 **Note:** In the documentation we'll call your top-level component **App** (you might have named it differently).
 
+## All the hooks
+You will probably not need to import all the hooks from **react-easier** at once, but if you do (and for reference) here they are
+
+```js
+import {
+  useAutoKeys,
+  useStates,
+  useFetch,
+  useDebug,
+  useOnMount,
+  useOnCleanup
+} from 'react-easier';
+```
+
 ## lists: useAutoKey
 React [requires you to set a key for each jsx element / item in a list](https://beta.reactjs.org/learn/rendering-lists#keeping-list-items-in-order-with-key). And for good reason: This makes the rendering of lists faster and more efficient.
 
