@@ -12,7 +12,11 @@ let sleep = ms => new Promise(res => setTimeout(res, ms)); // async sleep
 export async function consoleSrcMapped(stack, cMethod, cArgs, ignoreTime) {
 
   let { url, line, column, last } = stack;
-  let fullUrl = url + '?' + last.split('?')[1].split(':')[0];
+  let fullUrl = url;
+  try {
+    fullUrl = url + '?' + last.split('?')[1].split(':')[0];
+  }
+  catch (e) { }
 
   // Debounce, if more than one call during ignoreTime milliseconds
   if (ignoreTime && Date.now() - lastCall < ignoreTime) { return; }
