@@ -1,7 +1,7 @@
 {
   "name": "react-easier",
   "version": "2.0.0",
-  "description": "Useful React tools in the form of hooks, HOC:s and Components.",
+  "description": "Useful React hooks that minimize the complexity of state handling, contexts and fetching.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
