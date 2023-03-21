@@ -334,7 +334,7 @@ The initial value of **s.people** and **s.intro** in the example above will be a
 
 It's really this simple! 😃
 
-### useOnMount
+## useOnMount
 For clearity in your code you can use **useOnMount**(function) instead of **useEffect**(function, []). Another advantage of this is that you can provide an async function if you want to.
 
 ```js
@@ -352,7 +352,7 @@ export default MyComponent {
 }
 ```
 
-### useOnCleanup
+## useOnCleanup
 For clearity in your code you can use **useOnCleanup**(function) instead of **useEffect**(() => function, []).  Another advantage of this is that you can provide an async function if you want to.
 
 ```js
