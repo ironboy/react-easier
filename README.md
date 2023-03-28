@@ -372,3 +372,122 @@ export default MyComponent {
 
 ## Have fun and be productive!
 Have fun and be productive with **react-easier**. It has saved me (the author, [ironboy](https://github.com/ironboy)) a lot of lines of code in React-based projects, and have increased the readability of the code my dev teams output. Hopefully it will do the same for you!
+
+## Important - read this if yu are using  React-router together with createBrowserRouter
+If you use react-easier together with [React-router](https://reactrouter.com/en/main) you don't hav to think about anyhting if you use React-router the 'old-school' way, first surrounding App with a <BrowserRouter> component where you create your React-root (probably in main.jsx if you use Vite) and then using the <Routes> and <Route>-components inside App for your routes...
+
+However if you use  **createBrowserRouter**, **RouterProvider** and (if so probably) **Outlet** you will need to replace the **Outlet** component from React router with a *dropin replacement* also called **Outlet** from react-easier.
+
+(The Outlet-component from react-easier makes sure that components inside the Outlet (our routes) rerender when a **useStates**-based state is changed in the parent component.)
+
+Here's a complete example, when the list of cats has been fetched, using **useFetch** the *main* state updates and this triggers a reload of the CatList component that uses the data from to the *main* state. (Had you not used the Outlet-component from react-easier, this wouldn't have worked.)
+
+#### src/main.jsx
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import './index.css';
+
+import App from './App';
+import StartPage from './StartPage';
+import CatList from './CatList';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <StartPage />
+      },
+      {
+        path: "/catlist",
+        element: <CatList />
+      }
+    ],
+  },
+]);
+
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
+```
+
+#### src/App
+
+```jsx
+import { useAutoKeys, useDebug, useFetch, useStates, Outlet } from "react-easier";
+import Menu from './Menu';
+
+export default function App() {
+
+  useAutoKeys();
+  useDebug();
+
+  const s = useStates('main', {
+    cats: useFetch('/cats.json')
+  });
+
+  return <>
+    <Menu />
+    <Outlet />
+  </>;
+
+}
+```
+
+#### src/Menu
+
+```jsx
+import { NavLink } from 'react-router-dom';
+
+export default function Menu() {
+
+  return <>
+    <NavLink to="/">StartPage</NavLink>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <NavLink to="/catlist">Cat List</NavLink>
+  </>;
+}
+```
+
+#### src/Catlist
+
+```jsx
+import { useStates } from 'react-easier';
+
+export default function CatList() {
+
+  const s = useStates('main');
+
+  return <>
+    <h2>CatList</h2>
+    {s.cats.map(({ name }) => <h3>{name}</h3>)}
+  </>;
+
+}
+```
+
+### public/cats.json
+
+```json
+[
+  {
+    "name": "Kitty"
+  },
+  {
+    "name": "Fritz"
+  },
+  {
+    "name": "Garfield"
+  }
+]
+```
+
+
