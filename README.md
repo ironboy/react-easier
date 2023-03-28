@@ -388,7 +388,6 @@ Here's a complete example, when the list of cats has been fetched, using **useFe
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './index.css';
 
 import App from './App';
 import StartPage from './StartPage';
