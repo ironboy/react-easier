@@ -373,12 +373,12 @@ export default MyComponent {
 ## Have fun and be productive!
 Have fun and be productive with **react-easier**. It has saved me (the author, [ironboy](https://github.com/ironboy)) a lot of lines of code in React-based projects, and have increased the readability of the code my dev teams output. Hopefully it will do the same for you!
 
-## Important - read this if yu are using  React-router together with createBrowserRouter
-If you use react-easier together with [React-router](https://reactrouter.com/en/main) you don't hav to think about anyhting if you use React-router the 'old-school' way, first surrounding App with a <BrowserRouter> component where you create your React-root (probably in main.jsx if you use Vite) and then using the <Routes> and <Route>-components inside App for your routes...
+## Important - read this if you are using  React-router  with createBrowserRouter
+If you use react-easier together with [React-router](https://reactrouter.com/en/main) you don't have to think about anyhting if you choose the 'old-school' way, first surrounding App with a \<BrowserRouter\>-component where you create your React-root (probably in *main.jsx* if you use Vite) and then using the \<Routes\> and \<Route\>-components inside App for your routes...
 
-However if you use  **createBrowserRouter**, **RouterProvider** and (if so probably) **Outlet** you will need to replace the **Outlet** component from React router with a *dropin replacement* also called **Outlet** from react-easier.
+However if you use  **createBrowserRouter**, **RouterProvider** and (if so probably) **Outlet** you will need to replace the **Outlet**-component from React router with a *dropin replacement* also called **Outlet** from react-easier.
 
-(The Outlet-component from react-easier makes sure that components inside the Outlet (our routes) rerender when a **useStates**-based state is changed in the parent component.)
+The *Outlet*-component from react-easier makes sure that components inside the Outlet (the routes) rerender when a **useStates**-based state is changed in the parent component.
 
 Here's a complete example, when the list of cats has been fetched, using **useFetch** the *main* state updates and this triggers a reload of the CatList component that uses the data from to the *main* state. (Had you not used the Outlet-component from react-easier, this wouldn't have worked.)
 
@@ -419,7 +419,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 );
 ```
 
-#### src/App
+#### src/App.jsx
 
 ```jsx
 import { useAutoKeys, useDebug, useFetch, useStates, Outlet } from "react-easier";
@@ -442,7 +442,7 @@ export default function App() {
 }
 ```
 
-#### src/Menu
+#### src/Menu.jsx
 
 ```jsx
 import { NavLink } from 'react-router-dom';
@@ -457,7 +457,7 @@ export default function Menu() {
 }
 ```
 
-#### src/Catlist
+#### src/Catlist.jsx
 
 ```jsx
 import { useStates } from 'react-easier';
