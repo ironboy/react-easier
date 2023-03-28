@@ -16,9 +16,9 @@ function _stack(findBind) {
   // get the stack
   let stack = new Error().stack.toString().split('\n');
 
-  // but only the part of the stack that is outside of react /react-dom
-  let indexOfReact = stack.findIndex(x => x.includes('react-dom'));
-  stack = stack.slice(0, indexOfReact);
+  // get the first .jsx file
+  let indexOfJsx = stack.findIndex(x => x.includes('.jsx'));
+  stack = stack.slice(0, indexOfJsx + 1);
 
   // if findBind look for next none this library thing after bindStatesToForm
   if (findBind) {
