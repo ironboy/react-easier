@@ -21,15 +21,12 @@ export function useStates(initObj, stateName) {
   const [state, setState] = initObj ?
     useState({ state: initObj }) : savedStates[stateName];
 
-  // if this is the initial setting of the call goFetch
-  // and, after awaiting, log the initialization of the state 
-  // (nice log order, but messes with the stack so get it before)
+  // if this is the initial setting of then call goFetch
   if (state.state === initObj) {
     (async () => {
-      let _stack = stack();
-      await goFetch(state, setState);
       debugLog('initialize', state, initObj, '',
-        initObj, undefined, stateName, _stack);
+        initObj, undefined, stateName);
+      await goFetch(state, setState);
     })();
   }
 
