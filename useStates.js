@@ -27,7 +27,7 @@ export function useStates(initObj, stateName) {
 
 
   // localState
-  if (stateName) {
+  if (stateName && !initObj) {
     let [localWatcher, setLocalWatcher] = useState({ state: initObj });
     if (localWatcher.state === initObj) {
       savedWatcherStates[stateName] = savedWatcherStates[stateName] || [];
@@ -37,7 +37,7 @@ export function useStates(initObj, stateName) {
 
   function setState(...args) {
     setStateRaw(...args);
-    if (stateName) {
+    if (stateName && !initObj) {
       for (let [val, setter] of savedWatcherStates[stateName]) {
         setter(args[0]);
       }
