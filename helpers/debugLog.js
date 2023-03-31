@@ -24,8 +24,10 @@ export async function debugLog(
 
   // get the stack if not defined in param
   stack = stack || getStack();
-  stack.last.includes('bindStatesToForm')
-    && (stack = window.___lastBindChange___);
+  if (window.___lastBindChange___) {
+    stack = window.___lastBindChange___;
+    delete window.___lastBindChange___;
+  }
 
   // don't start a new debugLog before the previous one has finished
   if (window.___debugLock___) {
@@ -98,8 +100,8 @@ export async function debugLog(
 
     // insert old and new values
     if (action !== 'initialize') {
-      if (action !== 'get') { styles.splice(styles.length - 4, 0, oldValue); }
-      styles.splice(styles.length - 2, 0, newValue);
+      if (action !== 'get') { styles.splice(styles.length - 4, 0, oldValue && oldValue._isProxy ? oldValue._ : oldValue); }
+      styles.splice(styles.length - 2, 0, newValue && newValue._isProxy ? newValue._ : newValue);
     }
     styles.push(state.state);
 
@@ -109,6 +111,7 @@ export async function debugLog(
 
   // if something goes wrong while creating the output
   catch (e) {
+    console.log(e);
     console.log(...(output ? output : ['Could not extract debug details.']));
   }
 

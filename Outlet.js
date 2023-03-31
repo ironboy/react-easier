@@ -1,6 +1,10 @@
-import React from 'react';
-import { Outlet as RRDOutlet } from 'react-router-dom';
-
 export function Outlet() {
-  return React.createElement(RRDOutlet, { key: Math.random() });
+  document.body.innerHTML = `<pre style="background-color:#fff; color: #ab1f15">
+
+    Use of Outlet from 'react-easier'. 
+    This component has been removed from the library!    
+
+    Use Outlet from 'react-router-dom' instead!
+  </pre`;
+  return null;
 }

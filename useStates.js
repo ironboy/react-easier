@@ -1,12 +1,16 @@
-import { useState, useDebugValue } from 'react';
+import { useState, useDebugValue, useEffect } from 'react';
 import { makeProxyFactory } from './helpers/makeProxyFactory';
-import { stack } from './helpers/stack';
 import { bind } from './helpers/bindStatesToForm';
 import { debugLog } from './helpers/debugLog';
 import { goFetch } from './useFetch';
 
 // an object in which we save states that have names
 const savedStates = {};
+
+// and another for 'watcher'-local states
+// (needed for createBrowserRouter - i.e. cases 
+//  where we don't have a normal descedant line of components)
+const savedWatcherStates = {};
 
 export function useStates(initObj, stateName) {
 
@@ -15,11 +19,30 @@ export function useStates(initObj, stateName) {
     && ([initObj, stateName] = [stateName, initObj]);
 
   // for easier viewing of named states in React dev tools
-  useDebugValue(stateName || 'local state');
+  useDebugValue((initObj ? stateName : stateName + ' subscriber') || 'local state');
 
   // get the state from the savedStates if name only
-  const [state, setState] = initObj ?
+  const [state, setStateRaw] = initObj ?
     useState({ state: initObj }) : savedStates[stateName];
+
+
+  // localState
+  if (stateName) {
+    let [localWatcher, setLocalWatcher] = useState({ state: initObj });
+    if (localWatcher.state === initObj) {
+      savedWatcherStates[stateName] = savedWatcherStates[stateName] || [];
+      savedWatcherStates[stateName].push([localWatcher, setLocalWatcher]);
+    }
+  }
+
+  function setState(...args) {
+    setStateRaw(...args);
+    if (stateName) {
+      for (let [val, setter] of savedWatcherStates[stateName]) {
+        setter(args[0]);
+      }
+    }
+  }
 
   // if this is the initial setting of then call goFetch
   if (state.state === initObj) {
