@@ -12,6 +12,14 @@ const styleAlts = [
   'color: rgb(11, 30, 124);'
 ];
 
+// try to create a deep copy - so we can log things in their curent state
+function deepCopy(val) {
+  try {
+    return JSON.parse(JSON.stringify(val));
+  }
+  catch (e) { return val; }
+}
+
 export async function debugLog(
   action, state, obj, key,
   newValue, oldValue, stateName, stack, fetchUrl
@@ -101,10 +109,10 @@ export async function debugLog(
 
     // insert old and new values
     if (action !== 'initialize') {
-      if (action !== 'get') { styles.splice(styles.length - 4, 0, oldValue && oldValue._isProxy ? oldValue._ : oldValue); }
-      styles.splice(styles.length - 2, 0, newValue && newValue._isProxy ? newValue._ : newValue);
+      if (action !== 'get') { styles.splice(styles.length - 4, 0, deepCopy(oldValue && oldValue._isProxy ? oldValue._ : oldValue)); }
+      styles.splice(styles.length - 2, 0, deepCopy(newValue && newValue._isProxy ? newValue._ : newValue));
     }
-    styles.push(state.state);
+    styles.push(deepCopy(state.state));
 
     // write to the console.log, then
     consoleSrcMapped(stack, 'log', [output, ...styles]);
@@ -120,7 +128,7 @@ export async function debugLog(
   window.___debugLock___ = false;
 }
 
-// debug of fetch
+// TODO: debug of fetch
 export default function debugLogFetch(
   _stack, url, obj, objKey, stateName, state, val
 ) {

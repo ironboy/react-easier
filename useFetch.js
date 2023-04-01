@@ -74,7 +74,7 @@ async function _fetch(
 ) {
   let fetched = await (await fetch(url, options))[type]();
   let val = await postProcess(fetched);
-  debugLogFetch(_stack, url, obj, objKey, stateName, state, val);
+  setTimeout(() => debugLogFetch(_stack, url, obj, objKey, stateName, state, val), 0);
   return val;
 }
 
