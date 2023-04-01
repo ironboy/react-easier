@@ -28,11 +28,9 @@ export function useStates(initObj, stateName) {
 
   // localState
   if (stateName && !initObj) {
-    let [localWatcher, setLocalWatcher] = useState({ ...state });
-    if (localWatcher.state === initObj) {
-      savedWatcherStates[stateName] = savedWatcherStates[stateName] || [];
-      savedWatcherStates[stateName].push([localWatcher, setLocalWatcher]);
-    }
+    let [localWatcher, setLocalWatcher] = useState({ state: state.state });
+    savedWatcherStates[stateName] = savedWatcherStates[stateName] || [];
+    savedWatcherStates[stateName].push([localWatcher, setLocalWatcher]);
   }
 
   function setState(...args) {
