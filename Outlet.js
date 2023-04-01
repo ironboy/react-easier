@@ -5,6 +5,6 @@ export function Outlet() {
     This component has been removed from the library!    
 
     Use Outlet from 'react-router-dom' instead!
-  </pre`;
+  </pre>`;
   return null;
 }
