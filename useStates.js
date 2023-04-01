@@ -49,7 +49,7 @@ export function useStates(initObj, stateName) {
     (async () => {
       debugLog('initialize', state, initObj, '',
         initObj, undefined, stateName);
-      await goFetch(state, setState);
+      await goFetch(stateName, state, setState);
     })();
   }
 

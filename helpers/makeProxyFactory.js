@@ -29,7 +29,7 @@ export function makeProxyFactory(
       setState({ ...state });
       (async () => {
         let _stack = stack();
-        val instanceof Array && await goFetch(state, setState, [val]);
+        val instanceof Array && await goFetch(stateName, state, setState, [val]);
         debugLog('set', state, obj, key, val, valBefore, stateName, _stack);
       })();
       return true;

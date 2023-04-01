@@ -14,7 +14,7 @@ const styleAlts = [
 
 export async function debugLog(
   action, state, obj, key,
-  newValue, oldValue, stateName, stack
+  newValue, oldValue, stateName, stack, fetchUrl
 ) {
   // return if debug not on, or not on for get, or array.length (unnecessary)
   if (!window.___debugStates___) { return; }
@@ -80,7 +80,8 @@ export async function debugLog(
     output = [
       'state name', stateName || 'none, local state',
       'action', action + (action === 'initialize' ? '' : (' ' + path
-        .map(x => isNaN(+x) ? '.' + x : '[' + x + ']').join('').slice(1))),
+        .map(x => isNaN(+x) ? '.' + x : '[' + x + ']').join('').slice(1)))
+      + (!fetchUrl ? '' : ' (fetch from ' + fetchUrl + ')'),
       '', '',
       'file', url.split('src/')[1] || 'Only available in dev mode.',
       'time', new Date().toISOString(),
@@ -120,8 +121,9 @@ export async function debugLog(
 }
 
 // TODO: debug of fetch
-export default function debugLogFetch(_stack, url) {
+export default function debugLogFetch(
+  _stack, url, obj, objKey, stateName, state, val
+) {
   if (!window.___debugStates___) { return; }
-  // consoleSrcMapped(_stack, 'log',
-  //  ['\n%cuseFetch      %c' + url, ...styleAlts]);
+  debugLog('set', state, obj, objKey, val, [], stateName, _stack, url);
 }

@@ -334,6 +334,49 @@ The initial value of **s.people** and **s.intro** in the example above will be a
 
 It's really this simple! 😃
 
+### Optional arguments for useFetch
+There are two optional arguments you can send to useFetch, **type** and **options**:
+
+```js
+useFetch(url, type, options)
+
+// or if you want type='json' and options
+useFetch(url, options)
+```
+
+#### type
+The **type** argument is a string with the valid values *json, text, blob, clone, formData, arrayBuffer* that controls how the raw response data will be interpreted/unpacked. 
+
+If you don't specify **type** it will default to '*json*'.
+
+#### options
+Options is an object containing the standard request options for fetch, see [MDN - Supplying request options](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch#supplying_request_options). You can use it to add extra headers, send a POST request with a request body etc.
+
+**And:** You can add an extra option, **postProcess**. Post process should be a function (that can be async if you want to). The function recieves the result of the fetch and you can postprocess it any way you like as long as you (**important!**) return an array.
+
+The **postProcess** option is useful if you want to filter your data directly after fetching it or if you are fetching data that is wrapped in an object/array structure you don't care about preserving.
+
+#### Examples
+
+```js
+// Remove admins from result set
+useFetch('/api/users', {
+  postProcess: users => users.filter(
+    user => user.role !== 'admin'
+  )
+})
+```
+
+```js
+// Pick the data array from a
+// result set that is an object
+useFetch('/api/users', {
+  postProcess: result => result.data
+})
+```
+
+
+
 ## useOnMount
 For clearity in your code you can use **useOnMount**(function) instead of **useEffect**(function, []). Another advantage of this is that you can provide an async function if you want to.
 
