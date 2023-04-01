@@ -13,9 +13,14 @@ const styleAlts = [
 ];
 
 // try to create a deep copy - so we can log things in their curent state
+// and: keep functions
 function deepCopy(val) {
+  const funcs = [];
   try {
-    return JSON.parse(JSON.stringify(val));
+    return JSON.parse(JSON.stringify(val,
+      (key, val) => typeof val === 'function' ? funcs.push(val) && '____function____' : val),
+      (key, val) => val === '____function____' ? funcs.shift() : val
+    );
   }
   catch (e) { return val; }
 }
