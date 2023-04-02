@@ -25,18 +25,27 @@ export function useStates(initObj, stateName) {
   const [state, setStateRaw] = initObj ?
     useState({ state: initObj }) : savedStates[stateName];
 
-
   // localState
   if (stateName && !initObj) {
-    let [localWatcher, setLocalWatcher] = useState({ state: state.state });
-    savedWatcherStates[stateName] = savedWatcherStates[stateName] || [];
-    savedWatcherStates[stateName].push([localWatcher, setLocalWatcher]);
+    // let subscribeTime = window.performance.now() + Math.random() / (10 ** 9);
+    let [localWatcher, setLocalWatcher] = useState({ state: state.state, /*subscribeTime*/ });
+    // if (subscribeTime === localWatcher.subscribeTime) {
+    // let index = savedWatcherStates[stateName].length;
+    let saved = savedWatcherStates;
+    useEffect(() => {
+      saved[stateName] = saved[stateName] || [];
+      const id = Math.random();
+      saved[stateName].push({ id, setter: setLocalWatcher });
+      return () => saved[stateName] =
+        saved[stateName].filter(x => x.id !== id);
+    }, []);
   }
 
+  // set state, including setting the local watcher states
   function setState(...args) {
     setStateRaw(...args);
     if (stateName && !initObj) {
-      for (let [val, setter] of savedWatcherStates[stateName]) {
+      for (let { setter } of savedWatcherStates[stateName]) {
         setter(args[0]);
       }
     }
