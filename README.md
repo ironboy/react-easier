@@ -6,6 +6,15 @@ React-easier is number of extra hooks that makes React easier to use when it com
 
 **Note:** In the documentation we'll call your top-level component **App** (you might have named it differently).
 
+## Installtion 
+Preferably in a Vite-based React-project:
+
+```
+npm i react-easier
+```
+
+**Note**: React-easier will (try to) make changes to *vite.config.js*. It will not harm your configuration. If you use git/version control: Commit the modified *vite.config.js* to your repository.
+
 ## All the hooks
 You will probably not need to import all the hooks from **react-easier** at once, but if you do (and for reference) here they are
 
@@ -165,10 +174,8 @@ So, **useStates** is a bit opionated:
 * Does this mean that we leave the behind the idea of *immutability*? No, behind the scenes each change creates a new object and stores as the new state (i.e. the useStates 'engine' follows the principles of immutability).
 * From your end thing are simple: You just assign new values to properties in the state, and React reacts and rerenders the view.
 
-### Automatic console logs of the state and state changes
-You can get detailed automatic debugging/logging of each state change that occurs when using **useStates**. Simply call **useDebug()** once 
-
-Calling the hook **useDebug** turns the logging on. Only call it once for a complete application, at the top of your **App** component:
+## useDebug - Automatic console logs of the state and state changes
+You can get detailed automatic debugging/logging of each state change that occurs when using **useStates**. Simply call **useDebug()** once at the top of your **App** component:
 
 ```js
 import {useDebug} from 'react-easier';
@@ -176,6 +183,9 @@ import {useDebug} from 'react-easier';
 useDebug();
 ```
 
+We highly recommend using **useDebug** since it will report at what line in your code state changes occurs, which simplifies debugging of your states wastly.
+
+**Note:** All logging from **useDebug** is *turned off* in production mode (if you use Vite as your build system, otherwise remove the call to useDebug before building for production).
 
 ### Manual console logs of the state
 When you *console.log* a state kept by **useStates** (or any object or array from that state) you will see that it is actually a javascript proxy object, to *console.log* the 'raw' object - simply add '._' after it:
@@ -185,6 +195,8 @@ console.log(s._);
 console.log(s.someObject._);
 console.log(s.someArray._);
 ```
+
+**Note:** There should be little need for manual logging if you use **useDebug**.
 
 ## state: useStates - for states across components
 When you want to share states across components in vanilla React you can use **createContext** in combination with **useContext** and **useState**... It actually involves a fair amount of boiler plate code to set this up correctly in Vanilla React... So don't bother! With **useStates** it becomes simple to share a state across components.
