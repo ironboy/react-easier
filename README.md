@@ -185,7 +185,7 @@ useDebug();
 
 We highly recommend using **useDebug** since it will report at what line in your code state changes occurs, which simplifies debugging of your states wastly.
 
-**Note:** All logging from **useDebug** is *turned off* in production mode (if you use Vite as your build system, otherwise remove the call to useDebug before building for production).
+**Note:** All logging from **useDebug** is *turned off* automatically in production mode (if you use Vite as your build system, otherwise remove the call to useDebug before building for production).
 
 ### Manual console logs of the state
 When you *console.log* a state kept by **useStates** (or any object or array from that state) you will see that it is actually a javascript proxy object, to *console.log* the 'raw' object - simply add '._' after it:
@@ -205,7 +205,7 @@ When you want to share states across components in vanilla React you can use **c
 
 You declare the initial values of the state in the topmost component where you need the state.
 
-You also declare a *namespace* (that can beany string you want):
+You also declare a *namespace* (that can be any string you want):
 
 ```js
 import {useStates} from 'react-easier';
