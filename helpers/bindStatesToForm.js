@@ -13,7 +13,12 @@ export function bind(obj, name, value = obj[name], altValue) {
     value,
     checked: obj[name] === value,
     onChange: ({ target: t }) => {
+      // force stack through debounceMem in debugLog
+      // (rapid writing might otherwise omit occasional logs)
+      stackAtCall && stackAtCall.unshift(Math.random());
+      // remember stack at call
       stackAtCall && (window.___lastBindChange___ = stackAtCall);
+      // return attributes/props
       return t.type === 'checkbox' ?
         obj[name] = t.checked ? value : altValue :
         obj[name] = t.type === 'number' ?
