@@ -1,9 +1,11 @@
 {
   "name": "react-easier",
-  "version": "2.2.4",
+  "version": "2.2.5",
+  "type": "module",
   "description": "Useful React hooks that minimize the complexity of state handling, contexts and fetching.",
   "main": "index.js",
   "scripts": {
+    "postinstall": "node postinstall.cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

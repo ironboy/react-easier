@@ -16,9 +16,10 @@ function _stack() {
   // get the stack
   let stack = new Error().stack.toString().split('\n');
 
-  // get the first .jsx file
-  let indexOfJsx = stack.findIndex(x => x.includes('.jsx'));
-  stack = stack.slice(0, indexOfJsx + 1);
+  // get the first file in the src folder
+  let lookFor = [...location.href.split('/').slice(0, 3), 'src'].join('/');
+  let indexOfFile = stack.findIndex(x => x.includes(lookFor));
+  stack = stack.slice(0, indexOfFile + 1);
 
   // parse the stack to get url, line and column of file
   let last = stack.slice(-1)[0];

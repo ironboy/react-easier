@@ -125,8 +125,8 @@ export async function debugLog(
 
   // if something goes wrong while creating the output
   catch (e) {
-    console.log(e);
-    console.log(...(output ? output : ['Could not extract debug details.']));
+    // fail silently, keep next line commented  out for fast debugging
+    // console.log(...(output ? output : ['Could not extract debug details.']));
   }
 
   // unlock -> ok to process next log message

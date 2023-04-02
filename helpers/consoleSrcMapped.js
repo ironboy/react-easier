@@ -25,8 +25,11 @@ export async function consoleSrcMapped(stack, cMethod, cArgs, ignoreTime) {
   // Read source map from transpiled file or cache
   let sourceMap = sourceMapCache[fullUrl];
   if (!sourceMap) {
-    let fileContent = url.split('src/')[1] ? await (await fetch(url)).text() : '';
-    sourceMap = fileContent.slice(fileContent.indexOf('//# source' + 'MappingURL'));
+    try {
+      let fileContent = url.split('src/')[1] ? await (await fetch(url)).text() : '';
+      sourceMap = fileContent.slice(fileContent.indexOf('//# source' + 'MappingURL'));
+    }
+    catch (e) { }
   }
   sourceMapCache[fullUrl] = sourceMap;
 
