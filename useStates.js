@@ -27,7 +27,7 @@ export function useStates(initObj, stateName) {
 
   // localState
   if (stateName && !initObj) {
-    let [localWatcher, setLocalWatcher] = useState({ state: state.state });
+    let setLocalWatcher = useState({ state: state.state })[1];
     let saved = savedWatcherStates;
     useEffect(() => {
       saved[stateName] = saved[stateName] || [];
@@ -41,10 +41,9 @@ export function useStates(initObj, stateName) {
   // set state, including setting the local watcher states
   function setState(...args) {
     setStateRaw(...args);
-    if (stateName) {
-      for (let { setter } of savedWatcherStates[stateName]) {
-        setter(args[0]);
-      }
+    if (!stateName) { return; }
+    for (let { setter } of savedWatcherStates[stateName]) {
+      setter(args[0]);
     }
   }
 
