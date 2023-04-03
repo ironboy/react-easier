@@ -7,7 +7,7 @@ import { goFetch } from './useFetch';
 // an object in which we save states that have names
 const savedStates = {};
 
-// and another for 'watcher'-local states
+// a memory for 'watcher'-local states
 // (needed for createBrowserRouter - i.e. cases 
 //  where we don't have a normal descedant line of components)
 const savedWatcherStates = {};
@@ -27,10 +27,7 @@ export function useStates(initObj, stateName) {
 
   // localState
   if (stateName && !initObj) {
-    // let subscribeTime = window.performance.now() + Math.random() / (10 ** 9);
-    let [localWatcher, setLocalWatcher] = useState({ state: state.state, /*subscribeTime*/ });
-    // if (subscribeTime === localWatcher.subscribeTime) {
-    // let index = savedWatcherStates[stateName].length;
+    let [localWatcher, setLocalWatcher] = useState({ state: state.state });
     let saved = savedWatcherStates;
     useEffect(() => {
       saved[stateName] = saved[stateName] || [];
@@ -44,7 +41,7 @@ export function useStates(initObj, stateName) {
   // set state, including setting the local watcher states
   function setState(...args) {
     setStateRaw(...args);
-    if (stateName && !initObj) {
+    if (stateName) {
       for (let { setter } of savedWatcherStates[stateName]) {
         setter(args[0]);
       }
