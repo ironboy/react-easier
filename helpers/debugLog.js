@@ -133,7 +133,7 @@ export async function debugLog(
   window.___debugLock___ = false;
 }
 
-// TODO: debug of fetch
+// Debug of fetch
 export default function debugLogFetch(
   _stack, url, obj, objKey, stateName, state, val
 ) {
