@@ -243,6 +243,11 @@ export default function SubComponent(){
 
 It's really this simple! 😃
 
+### Can I declare an initial state / object for the same named state in several different components?
+Yes, you can (since version 3.0.0 of react-easier) - if so the objects will be compounded into the same object. Note that this will happen each time a component mounts. So if a component mounts/unmounts/remounts and sets a part of the state, that part (those properties) *will* be reset on the next mount.
+
+*Avoid:* Avoid setting an initial state in a component that will mount multiple times at once (for example: different instances of an item in a list)... The result of doing so might confuse you...
+
 ## Connecting state variables to a form
 The React documentation calls this concept *controlled components*. It might seem to be a strange name until you realize that in this case they count html elements as components. A controlled component is 'two-way-bound' to a state. When the user makes a change to the value of the input element the state changes. And the state controls the value of the input element...
 

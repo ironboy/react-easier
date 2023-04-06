@@ -90,8 +90,12 @@ export async function debugLog(
     let { url } = stack;
 
     // create output
+    let stateNameX = stateName.indexOf('local state: ') !== 0 ?
+      stateName : 'local state in ' + ((url.split('src/')[1] || '').split('/').slice(-1) || '')
+    stateNameX = stateNameX === 'local state in ' ? 'local state' : stateNameX;
+    stateNameX = stateNameX.replace(/\.jsx{0,1}$/g, '');
     output = [
-      'state name', stateName || 'none, local state',
+      'state name', stateNameX || 'none, local state',
       'action', action + (action === 'initialize' ? '' : (' ' + path
         .map(x => isNaN(+x) ? '.' + x : '[' + x + ']').join('').slice(1)))
       + (!fetchUrl ? '' : ' (fetch from ' + fetchUrl + ')'),

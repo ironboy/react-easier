@@ -4,62 +4,54 @@ import { bind } from './helpers/bindStatesToForm';
 import { debugLog } from './helpers/debugLog';
 import { goFetch } from './useFetch';
 
-// an object in which we save states that have names
-const savedStates = {};
+// a memory for named states
+const namedStates = {};
 
-// a memory for 'watcher'-local states
-// (needed for createBrowserRouter - i.e. cases 
-//  where we don't have a normal descedant line of components)
-const savedWatcherStates = {};
+export function useStates(stateName, initObj) {
 
-export function useStates(initObj, stateName) {
+  // first call?
+  const anObject = { initialized: true };
+  const toCompare = useState(anObject)[0];
+  const firstCall = anObject === toCompare;
 
-  // switch argument values around depending on type
-  typeof initObj === 'string'
-    && ([initObj, stateName] = [stateName, initObj]);
+  // setup state and add initObj to state
+  const ns = namedStates;
+  const isLocal = typeof stateName !== 'string';
+  isLocal && ((initObj = stateName) || 1)
+    && (stateName = useState(`local state: ${Math.random()}`)[0]);
+  initObj = initObj || {};
+  ns[stateName] = ns[stateName] || { state: {}, listeners: [] };
+  firstCall && (ns[stateName].state = { ...ns[stateName].state, ...initObj });
+  const state = ns[stateName];
+  firstCall && (async () => await goFetch(stateName, { state: state.state }, setState))();
+  firstCall && Object.keys(initObj).length &&
+    debugLog('initialize', state, state, '', state, undefined, stateName);
+  useDebugValue(isLocal ? 'local state' : stateName);
 
-  // for easier viewing of named states in React dev tools
-  useDebugValue((initObj ? stateName : stateName + ' subscriber') || 'local state');
+  // add listener on mount, remove on unmount
+  let setter = useState(state.state)[1];
+  useEffect(() => {
+    let listener = x => setter(x);
+    state.listeners.push(listener);
+    return () => {
+      state.listeners.splice(state.listeners.indexOf(listener), 1);
+      setTimeout(removeStatesWithNoListeners, 0);
+    }
+  }, []);
 
-  // get the state from the savedStates if name only
-  const [state, setStateRaw] = initObj ?
-    useState({ state: initObj }) : savedStates[stateName];
-
-  // localState
-  if (stateName && !initObj) {
-    let setLocalWatcher = useState({ state: state.state })[1];
-    let saved = savedWatcherStates;
-    useEffect(() => {
-      saved[stateName] = saved[stateName] || [];
-      const id = Math.random();
-      saved[stateName].push({ id, setter: setLocalWatcher });
-      return () => saved[stateName] =
-        saved[stateName].filter(x => x.id !== id);
-    }, []);
+  // call listeners on setState
+  function setState() {
+    state.listeners.forEach(x => x({ state: state.state }));
   }
 
-  // set state, including setting the local watcher states
-  function setState(...args) {
-    setStateRaw(...args);
-    if (!stateName) { return; }
-    for (let { setter } of savedWatcherStates[stateName]) {
-      setter(args[0]);
+  // removeStates with no listeners
+  function removeStatesWithNoListeners() {
+    for (let key in ns) {
+      !ns[key].listeners.length && delete ns[key];
     }
   }
 
-  // if this is the initial setting of then call goFetch
-  if (state.state === initObj) {
-    (async () => {
-      debugLog('initialize', state, initObj, '',
-        initObj, undefined, stateName);
-      await goFetch(stateName, state, setState);
-    })();
-  }
-
-  // if a stateName is provided then save the state in savedStates
-  stateName && (savedStates[stateName] = [state, setState]);
-
-  // proxy objects and arrays but don't double proxy them
+  // proxy objects and arrays
   const makeProxy =
     makeProxyFactory(stateName, state, setState, bind, debugLog);
 
