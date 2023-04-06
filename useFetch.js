@@ -29,6 +29,7 @@ export function useFetch(url, type, options) {
 // its proxy factory upon the setting of a value to an array
 // checks the state and fetches arrays marked for fetching
 export async function goFetch(stateName, state, setState, toFetch) {
+  let callFromProxyFactory = false;
   // find arrays that are marked for fetching, if not provided
   if (!toFetch) {
     toFetch = [];
@@ -44,6 +45,9 @@ export async function goFetch(stateName, state, setState, toFetch) {
       });
     } catch (e) { }
   }
+  else {
+    callFromProxyFactory = toFetch[0] && toFetch[0].___toFetch___;
+  }
   // fetch and add to array (if not in debounceMem already)
   for (let x of toFetch) {
     if (!x.___toFetch___) { continue; }
@@ -56,7 +60,7 @@ export async function goFetch(stateName, state, setState, toFetch) {
       time: Date.now(),
       fetched: _fetch(
         url, options, type, _stack,
-        postProcess, obj, objKey, stateName, state
+        postProcess, obj, objKey, stateName, state, callFromProxyFactory
       )
     }
     let result = await debounceMem[key].fetched;
@@ -64,17 +68,19 @@ export async function goFetch(stateName, state, setState, toFetch) {
     result instanceof Array ? x.push(...result) : x.push(result);
     setState({ ...state });
   }
+  return callFromProxyFactory;
 }
 
 // do the actual fetching (thus we can wait for both steps
 // with a single await in goFetch - after adding to debounceMem)
 async function _fetch(
   url, options, type, _stack,
-  postProcess, obj, objKey, stateName, state
+  postProcess, obj, objKey, stateName, state, callFromProxyFactory
 ) {
   let fetched = await (await fetch(url, options))[type]();
   let val = await postProcess(fetched);
-  setTimeout(() => debugLogFetch(_stack, url, obj, objKey, stateName, state, val), 0);
+  !callFromProxyFactory &&
+    setTimeout(() => debugLogFetch(_stack, url, obj, objKey, stateName, state, val), 0);
   return val;
 }
 

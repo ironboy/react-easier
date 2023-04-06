@@ -29,8 +29,9 @@ export function makeProxyFactory(
       setState({ ...state });
       (async () => {
         let _stack = stack();
-        val instanceof Array && await goFetch(stateName, state, setState, [val]);
-        debugLog('set', state, obj, key, val, valBefore, stateName, _stack);
+        let fetched = val instanceof Array && await goFetch(stateName, state, setState, [val]);
+        let extraLog = fetched ? [fetched.url] : [];
+        debugLog('set', state, obj, key, val, valBefore, stateName, _stack, ...extraLog);
       })();
       return true;
     },

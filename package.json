@@ -1,6 +1,6 @@
 {
   "name": "react-easier",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "type": "module",
   "description": "Useful React hooks that minimize the complexity of state handling, contexts and fetching.",
   "main": "index.js",

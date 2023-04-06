@@ -142,5 +142,6 @@ export default function debugLogFetch(
   _stack, url, obj, objKey, stateName, state, val
 ) {
   if (!window.___debugStates___) { return; }
+  val instanceof Array || (val = [val]);
   debugLog('set', state, obj, objKey, val, [], stateName, _stack, url);
 }
