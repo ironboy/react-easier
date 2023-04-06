@@ -44,7 +44,7 @@ export function useStates(stateName, initObj) {
     state.listeners.forEach(x => x({ state: state.state }));
   }
 
-  // removeStates with no listeners
+  // remove states with no listeners
   function removeStatesWithNoListeners() {
     for (let key in ns) {
       !ns[key].listeners.length && delete ns[key];
