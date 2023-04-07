@@ -25,7 +25,6 @@ export function makeProxyFactory(
     },
     set(obj, key, val) {
       let valBefore = obj[key];
-      if (valBefore === val) { return; }
       obj[key] = val;
       setState({ ...state });
       (async () => {
