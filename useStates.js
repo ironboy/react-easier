@@ -25,8 +25,8 @@ export function useStates(stateName, initObj) {
     && (ns[stateName].state = { ...ns[stateName].state, ...initObj });
   const state = ns[stateName];
   firstCall && (async () => await goFetch(stateName, { state: state.state }, setState))();
-  firstCall && Object.keys(initObj).length &&
-    debugLog('initialize', state, state, '', state, undefined, stateName);
+  firstCall && Object.keys(initObj).length
+    && debugLog('initialize', state, state, '', state, undefined, stateName);
   useDebugValue(isLocal ? 'local state' : stateName);
 
   // add listener on mount, remove on unmount
