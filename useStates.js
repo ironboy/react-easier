@@ -21,7 +21,8 @@ export function useStates(stateName, initObj) {
     && (stateName = useState(`local state: ${Math.random()}`)[0]);
   initObj = initObj || {};
   ns[stateName] = ns[stateName] || { state: {}, listeners: [] };
-  firstCall && (ns[stateName].state = { ...ns[stateName].state, ...initObj });
+  firstCall && Object.keys(initObj).length
+    && (ns[stateName].state = { ...ns[stateName].state, ...initObj });
   const state = ns[stateName];
   firstCall && (async () => await goFetch(stateName, { state: state.state }, setState))();
   firstCall && Object.keys(initObj).length &&
