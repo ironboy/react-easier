@@ -6,7 +6,7 @@ React-easier is number of extra hooks that makes React easier to use when it com
 
 **Note:** In the documentation we'll call your top-level component **App** (you might have named it differently).
 
-## Installtion 
+## Installation 
 Preferably in a Vite-based React-project:
 
 ```
@@ -395,7 +395,7 @@ useFetch('/api/users', {
 
 
 ## useOnMount
-For clearity in your code you can use **useOnMount**(function) instead of **useEffect**(function, []). Another advantage of this is that you can provide an async function if you want to.
+For clarity in your code you can use **useOnMount**(function) instead of **useEffect**(function, []). Another advantage of this is that you can provide an async function if you want to.
 
 ```js
 import {useOnMount} from 'react-easier';
