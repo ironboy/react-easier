@@ -1,4 +1,4 @@
-![react-easier-logo](react-easier.svg)
+<img src="react-easier.svg" style="width:30%;padding-left:35%;padding-bottom:30px;padding-top:30px" alt="react-easier logo">
 
 # react-easier
 
