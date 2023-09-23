@@ -2,7 +2,7 @@
 
 # react-easier
 
-React-easier is number of extra hooks that makes React easier to use when it comes to lists, states (in and across components), forms and fetching data.
+React-easier provides a number of extra hooks that makes React easier to use when it comes to lists, states (in and across components), forms and fetching data.
 
 **Note:** Continuously tested with [Vite](https://vitejs.dev) as a React development framework, not with [CRA](https://create-react-app.dev) (Create React App). Why? Because CRA is growing old and tired.
 
