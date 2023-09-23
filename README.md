@@ -243,7 +243,7 @@ export default function SubComponent(){
 }
 ```
 
-It's really this simple! 😃
+It's really that simple! 😃
 
 ### Can I declare an initial state / object for the same named state in several different components?
 Yes, you can (since version 3.0.0 of react-easier) - if so the objects will be compounded into the same object. Note that this will happen each time a component mounts. So if a component mounts/unmounts/remounts and sets a part of the state, that part (those properties) *will* be reset on the next mount.
@@ -351,7 +351,7 @@ The hook **useFetch** does an async fetch of data (by default json data, but you
 
 The initial value of **s.people** and **s.intro** in the example above will be an empty array. This plays nicely with jsx. As soon as the data is fetched your array will fill up. In the case of '/api/people' with an array of objects from your REST api. In the case of intro.txt with a single element with the text from the file.
 
-It's really this simple! 😃
+It's really that simple! 😃
 
 ### Optional arguments for useFetch
 There are two optional arguments you can send to useFetch, **type** and **options**:
