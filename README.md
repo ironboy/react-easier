@@ -330,7 +330,7 @@ return <>
 ## Fetching data with useFetch
 Using Vanilla React, with no libraries, you will probably resort to calling **fetch** inside a useEffect (and inside a anonymous async function inside useEffect for that matter). Further more the fetch will be done twice if you are running in React StrictMode, as you should during development. This is... inconvenient.
 
-So **react-easier** provides the hook **useFetch** to simplify things (and only fetches the data once in StrictMode):
+So **react-easier** provides the hook **useFetch** to simplify things (and it only fetches the data once in StrictMode):
 
 ```jsx
 import {useStates, useFetch} from 'react-easier';
@@ -413,7 +413,7 @@ export default MyComponent {
 ```
 
 ## useOnCleanup
-For clearity in your code you can use **useOnCleanup**(function) instead of **useEffect**(() => function, []).  Another advantage of this is that you can provide an async function if you want to.
+For clarity in your code you can use **useOnCleanup**(function) instead of **useEffect**(() => function, []).  Another advantage of this is that you can provide an async function if you want to.
 
 ```js
 import {useOnCleanup} from 'react-easier';
