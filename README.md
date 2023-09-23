@@ -1,3 +1,5 @@
+![react-easier-logo](react-easier.svg)
+
 # react-easier
 
 React-easier is number of extra hooks that makes React easier to use when it comes to lists, states (in and across components), forms and fetching data.
@@ -413,7 +415,7 @@ export default MyComponent {
 ```
 
 ## useOnCleanup
-For clarity in your code you can use **useOnCleanup**(function) instead of **useEffect**(() => function, []).  Another advantage of this is that you can provide an async function if you want to.
+For clarity in your code you can use **useOnCleanup**(function) instead of **useEffect**(() => function, []). Another advantage of this is that you can provide an async function if you want to.
 
 ```js
 import {useOnCleanup} from 'react-easier';
@@ -540,3 +542,6 @@ export default function CatList() {
   { "name": "Garfield" }
 ]
 ```
+
+## Acknowledgements
+Logo made by Muhammad Usman, Vecteezy.com.
