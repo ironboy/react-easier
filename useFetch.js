@@ -7,7 +7,8 @@ const fetchSymbol = {}, debounceMem = {};
 
 // return an array, and mark it for later fetching
 // arrays are always safe for rendering with React
-export function useFetch(url, type, options) {
+export function useFetch(url, type, fetchOptions) {
+  let options = fetchOptions;
   if (type instanceof Object) {
     options = type;
     type = undefined;
